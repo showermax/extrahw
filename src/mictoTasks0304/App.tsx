@@ -9,7 +9,7 @@ type TodolistsType = {
     title: string
     filter: FilterValuesType
 }
-type TasksType = {
+export type TasksType = {
     [key: string]: TaskType[]
 
 }
@@ -66,23 +66,25 @@ function App() {
         setTasks({...tasks, [id_List]: tasks[id_List].map(el => el.id === taskId ? {...el, isDone: isDone} : el)});
     }
 
-
-    let tasksForTodolist = tasks;
-    const filterTheTasks = (id_List: string, filter: FilterValuesType) => {
-        if (filter === "active") tasksForTodolist = {...tasks,[id_List]: tasks[id_List].filter(el => !el.isDone)}
-        if (filter === "completed") tasksForTodolist = {...tasks,[id_List]: tasks[id_List].filter(el => el.isDone)}
+    function changeFilter(id_List: string, filter: FilterValuesType) {
         setTodolists(todolists.map(el => el.id === id_List ? {...el, filter: filter} : el))
-        console.log(tasksForTodolist)
     }
 
+    const filterTheTasks = (id_List: string, filter: FilterValuesType) => {
+        let tasksForTodolist = tasks;
+        if (filter === "active") tasksForTodolist = {...tasks,[id_List]: tasks[id_List].filter(el => !el.isDone)}
+        if (filter === "completed") tasksForTodolist = {...tasks,[id_List]: tasks[id_List].filter(el => el.isDone)}
+        return tasksForTodolist
+    }
     return (
         <div className="App">
             {todolists.map(el => {
+                filterTheTasks(el.id,el.filter)
                 return (
                     <Todolist title={el.title}
-                              tasks={tasksForTodolist[el.id]}
+                              tasks={filterTheTasks(el.id,el.filter)[el.id]}
                               removeTask={(id) => removeTask(el.id, id)}
-                              changeFilter={(filter) => filterTheTasks(el.id, filter)}
+                              changeFilter={(filter) => changeFilter(el.id, filter)}
                               addTask={(title) => addTask(el.id, title)}
                               changeTaskStatus={(id, isDone) => changeStatus(el.id, id, isDone)}
                               filter={el.filter}
