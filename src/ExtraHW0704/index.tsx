@@ -1,11 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-// import App from './ExtraHWRouting3103/App';
-// import App from './mictoTasks0304/App';
-// import App from './ExtraHW0504/App';
-import App from './ExtraHW0704/App';
-// import App from './ExtraHW/App';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 
