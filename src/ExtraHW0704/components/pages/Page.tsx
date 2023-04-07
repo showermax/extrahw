@@ -10,7 +10,7 @@ type PagePropsType = {
 
 export const Page = (props: PagePropsType) => {
     const param = useParams()
-    // console.log('params: ', Number(param.id))
+  //  console.log(param) //{id: "0", newID:"00"}
 
     return (
         <Content heading={props.pages[Number(param.id)].heading} pages={props.pages[Number(param.id)].about}/>
